@@ -1,0 +1,156 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL; // Start (head) of the linked list
+
+void insertAtBeginning(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = head;
+    head = newNode;
+    printf("%d inserted at the beginning.\n", value);
+}
+
+void insertAtEnd(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = newNode;
+    } else {
+        struct Node* temp = head;
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = newNode;
+    }
+    printf("%d inserted at the end.\n", value);
+}
+
+void deleteNode(int value) {
+    if (head == NULL) {
+        printf("List is empty. Nothing to delete.\n");
+        return;
+    }
+
+    struct Node *temp = head, *prev = NULL;
+
+    if (temp != NULL && temp->data == value) {
+        head = temp->next;
+        free(temp);
+        printf("%d deleted from the list.\n", value);
+        return;
+    }
+
+    while (temp != NULL && temp->data != value) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL) {
+        printf("%d not found in the list.\n", value);
+        return;
+    }
+
+    prev->next = temp->next;
+    free(temp);
+    printf("%d deleted from the list.\n", value);
+}
+
+void display() {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    struct Node* temp = head;
+    printf("Linked List: ");
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    int choice, value;
+
+    printf("=== SINGLY LINKED LIST IMPLEMENTATION IN C ===\n");
+
+    do {
+        printf("\nMenu:\n");
+        printf("1. Insert at Beginning\n");
+        printf("2. Insert at End\n");
+        printf("3. Delete a Node\n");
+        printf("4. Display List\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value to insert: ");
+                scanf("%d", &value);
+                insertAtBeginning(value);
+                break;
+
+            case 2:
+                printf("Enter value to insert: ");
+                scanf("%d", &value);
+                insertAtEnd(value);
+                break;
+
+            case 3:
+                printf("Enter value to delete: ");
+                scanf("%d", &value);
+                deleteNode(value);
+                break;
+
+            case 4:
+                display();
+                break;
+
+            case 5:
+                printf("Exiting program...\n");
+                break;
+
+            default:
+                printf("Invalid choice! Try again.\n");
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+
+output:
+=== SINGLY LINKED LIST IMPLEMENTATION IN C ===
+
+Menu:
+1. Insert at Beginning
+2. Insert at End
+3. Delete a Node
+4. Display List
+5. Exit
+Enter your choice: 1
+Enter value to insert: 10
+10 inserted at the beginning.
+
+Enter your choice: 2
+Enter value to insert: 20
+20 inserted at the end.
+
+Enter your choice: 4
+Linked List: 10 -> 20 -> NULL
+
+Enter your choice: 3
+Enter value to delete: 10
+10 deleted from the list.
+
+Enter your choice: 4
+Linked List: 20 -> NULL
+
