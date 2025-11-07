@@ -1,0 +1,115 @@
+Array Operations
+
+Program:
+
+#include <stdio.h>
+
+
+void display(int arr[], int n);
+void insert(int arr[], int *n, int value);
+int search(int arr[], int n, int key);
+
+int main() {
+    int arr[100], n, choice, value, key, result;
+
+   
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter %d elements:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    do {
+        printf("\n--- MENU ---\n");
+        printf("1. Display array\n");
+        printf("2. Insert element (at end)\n");
+        printf("3. Search element\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                display(arr, n);
+                break;
+
+            case 2:
+                printf("Enter value to insert: ");
+                scanf("%d", &value);
+                insert(arr, &n, value);
+                break;
+
+            case 3:
+                printf("Enter value to search: ");
+                scanf("%d", &key);
+                result = search(arr, n, key);
+                if (result == -1)
+                    printf("Element not found.\n");
+                else
+                    printf("Element found at position %d.\n", result + 1);
+                break;
+
+            case 4:
+                printf("Exiting program...\n");
+                break;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+
+void display(int arr[], int n) {
+    printf("Array elements: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+
+void insert(int arr[], int *n, int value) {
+    arr[*n] = value;
+    (*n)++;
+    printf("Element inserted successfully.\n");
+}
+
+
+int search(int arr[], int n, int key) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key)
+            return i;
+    }
+    return -1;
+}
+
+
+Output:
+
+Enter number of elements: 3
+Enter 3 elements:
+10 20 30
+
+--- MENU ---
+1. Display array
+2. Insert element (at end)
+3. Search element
+4. Exit
+Enter your choice: 1
+Array elements: 10 20 30
+
+Enter your choice: 2
+Enter value to insert: 40
+Element inserted successfully.
+
+Enter your choice: 3
+Enter value to search: 20
+Element found at position 2.
+
+Enter your choice: 4
+Exiting program...
